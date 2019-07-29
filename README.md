@@ -4,9 +4,9 @@
 you an ability to decompose processing flow into
 components.
 
-### Features
+## Features
 
-### Getting Started
+## Getting Started
 
 The main principle behind this framework is decomposition.
 Splitting up a code into one-format components make
@@ -14,9 +14,9 @@ it highly reusable. It becomes easy to develop
 different parts of video/image processing separately and
 share it with others.
 
-### Installing
+## Installing
 
-### Examples
+## Examples
 
 #### Importing
 Before using features of the framework
@@ -67,13 +67,13 @@ app.main_loop()
 more complex app see the following examples.
 
 
-### Testing
+## Testing
 
-### Versioning
+## Versioning
 
 We use SemVer for versioning. For the versions available,
 see the tags on this repository.
 
-### License
+## License
 
 
