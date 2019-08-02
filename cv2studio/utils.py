@@ -133,29 +133,49 @@ class TrackBar:
 
 
 class WindowBase:
+    """
+    Base class for all window classes
+    of the frame work. Contains overridable routines
+    for displaying and hiding window.
+    """
     def __init__(self, window_name: str, width=600, height=400):
         self.window_name = window_name
         self.displayed = False
         self.width = width
         self.height = height
-
-        self.init_width = width
         self.tracks = []
 
     def display(self):
+        """
+        Displays window and all attached
+        track bars.
+        :return: None
+        """
         self.displayed = True
         for track in self.tracks:
             track.display()
 
     def hide(self):
+        """
+        Destroys the window.
+        :return: None
+        """
         if self.displayed is True:
             try:
                 cv2.destroyWindow(self.window_name)
+            # TODO: what kind of exception does it throw when there is no such a window
             except Exception:
                 pass
         self.displayed = False
 
     def append_track_bar(self, track: TrackBar):
+        """
+        Sets correlations between the track bar
+        and the window. So that window will be able
+        to display it in the future.
+        :param track:
+        :return:
+        """
         self.tracks.append(track)
         track.parent_window = self
 
