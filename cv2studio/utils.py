@@ -34,32 +34,31 @@ text_windows_count = 0
 
 
 class TrackBar:
-    # This function is used by track bar (as onChange parameter)
-    def __routine(self, x):
-        # step is the difference between two values
-        # e. g. 1, 3, 5 for step 2
-        #       1, 2, 3 for step 1 (default)
-        min_value_diff = x - self.min_value
-        if min_value_diff % self.step == 0:
-            pass
-        else:
-            potential_value_1 = x - min_value_diff % self.step + self.step
-            potential_value_2 = x - min_value_diff % self.step
-            if potential_value_1 < self.max_value:
-                self.set(potential_value_1)
-            else:
-                self.set(potential_value_2)
+    # TODO: hide method
+    """
+        Class wrapper for cv2 track bar.
 
-        # calling the user specified routine
-        if self.on_change and callable(self.on_change):
-            self.on_change(x)
+        Does not require window creation.
+        If parent window is not specified
+        then default window used instead.
+        If there is no default window then
+        one is created.
+
+        To define onChange function-handler
+        assign it to <on_change> attribute.
+        It's called inside __routine method.
+    """
 
     def __init__(self, name='Track', min_value=0, max_value=10, start_value=None, step=1, on_change=None, parent=None):
-        global track_bars_count
+        global track_bars_count, default_track_window
+
+        # Generation of unique default
+        # name for the track bar if necessary
         if name == 'Track':
             name += str(track_bar_windows_count)
             track_bars_count += 1
         self.name = name
+
         self.min_value = min_value
         self.max_value = max_value
         self.start_value = start_value if start_value is not None else rand(min_value, max_value)
@@ -67,12 +66,20 @@ class TrackBar:
         self.on_change = on_change
         self.parent_window = parent
         self.displayed = False
-        if default_track_window and parent is None:
-            default_track_window.append_track_bar(self)
-        elif parent is not None:
-            parent.append_track_bar(self)
+
+        # bounding with the parent window
+        if default_track_window is None:
+            default_track_window = TrackWindow()
+        if self.parent_window is None:
+            self.parent_window = default_track_window
+        self.parent_window.append_track_bar(self)
 
     def display(self):
+        """
+        Displays the track bar. It's called by
+        display method of parent window of the track bar.
+        :return:
+        """
         if self.displayed is False:
             cv2.createTrackbar(self.name, self.parent_window.window_name, self.start_value, self.max_value,
                                self.__routine)
@@ -80,14 +87,49 @@ class TrackBar:
             self.displayed = True
 
     def get_value(self):
+        """
+        Used to access the position of the track bar
+        :return: current position of the track bar
+        """
         if self.parent_window is None:
             return -1
         return cv2.getTrackbarPos(self.name, self.parent_window.window_name)
 
-    def set(self, value):
+    def set_value(self, value):
+        """
+        Sets position of the track bar.
+        :param value: required position of track bar
+        :return: if success - True, if fail - False
+        """
         if self.parent_window is None:
-            return -1
+            return False
         cv2.setTrackbarPos(self.name, self.parent_window.window_name, value)
+        return True
+
+    def __routine(self, x):
+        """
+        This function is used by track bar as onChange parameter.
+        It serves as proxy that intercept call to user defined
+        method for accomplish features like step implementation.
+        :param x: track position. It's passed by OpenCV.
+        :return: None
+        """
+
+        # step implementation
+        relative_position = x - self.min_value
+        if relative_position % self.step == 0:
+            pass
+        else:
+            potential_value_high = x - relative_position % self.step + self.step
+            potential_value_low = x - relative_position % self.step
+            if potential_value_high < self.max_value:
+                self.set_value(potential_value_high)
+            else:
+                self.set_value(potential_value_low)
+
+        # calling the user specified routine
+        if self.on_change and callable(self.on_change):
+            self.on_change(x)
 
 
 class WindowBase:
