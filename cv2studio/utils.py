@@ -326,24 +326,46 @@ class LogWindow(WindowBase):
 
 
 class Window(WindowBase):
+    """
+    Window for displaying images.
+    """
+
     def __init__(self, window_name='Window', width=None):
         global windows_count
+
+        # Generation of unique default
+        # name for the log window if necessary
         if window_name == 'Window':
             if windows_count > 0:
                 window_name += str(windows_count)
             windows_count += 1
         window_name = str(window_name)
-        super().__init__(window_name, width)
+
         self.attached_track_windows = []
+        super().__init__(window_name, width)
 
     def imshow(self, img):
-        if self.width is not None:
-            img = imutils.resize(img, width=self.width)
+        """
+        Shows an image.
+        :param img: image to show
+        :return: None
+        """
+
+        img = imutils.resize(img, width=self.width, height=self.height)
         cv2.imshow(self.window_name, img)
+
+        # displaying bounded track windows
         for track_window in self.attached_track_windows:
             if not track_window.displayed:
                 track_window.display()
-        super().display()
+
+        WindowBase.display(self)
 
     def attach_track_window(self, track_window: TrackWindow):
+        """
+        Saves the track window so that
+        it can be displayed with this window.
+        :param track_window: track window to save
+        :return: None
+        """
         self.attached_track_windows.append(track_window)
