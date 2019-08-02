@@ -74,6 +74,11 @@ more complex app see the following examples.
 We use SemVer for versioning. For the versions available,
 see the tags on this repository.
 
+
+### Contributing
+
+Please read CONTRIBUTE.md for details on our code of conduct, and the process for submitting pull requests to us.
+
 ### License
 
 
