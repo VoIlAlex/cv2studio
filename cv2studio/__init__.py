@@ -28,6 +28,7 @@ class Component(object):
 
 
 # TODO: FPS adjustment so user can set it.
+# TODO: optional width and height for App
 class App(object):
     def __init__(self, path: str = None, resource_type=WEBCAM, window_name='Window'):
         '''

@@ -8,7 +8,6 @@ from numpy.random import randint as rand
 import imutils
 import numpy as np
 
-# TODO: refactor the src (write documentation, remove redundancy, etc.)
 
 __all__ = [
     'TrackBar',
