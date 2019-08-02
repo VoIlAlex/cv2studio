@@ -30,7 +30,7 @@ default_track_window = None
 track_bars_count = 0
 track_bar_windows_count = 0
 windows_count = 0
-text_windows_count = 0
+log_windows_count = 0
 
 
 class TrackBar:
@@ -138,6 +138,7 @@ class WindowBase:
     of the frame work. Contains overridable routines
     for displaying and hiding window.
     """
+
     def __init__(self, window_name: str, width=600, height=400):
         self.window_name = window_name
         self.displayed = False
@@ -185,6 +186,7 @@ class TrackWindow(WindowBase):
         This kind of window is used to hold
         track bars.
     """
+
     def __init__(self, window_name: str = 'Track bars'):
         global track_bar_windows_count, default_track_window
 
@@ -226,46 +228,99 @@ class TrackWindow(WindowBase):
 
 
 class LogWindow(WindowBase):
+    """
+    Window used for logging.
+    Format of logging:
+        log_window[key] = value
+    """
+
     def __init__(self, window_name='WindowText', width=600, height=400):
-        global text_windows_count
+        global log_windows_count
+
+        # Generation of unique default
+        # name for the log window if necessary
         if window_name == 'WindowText':
-            window_name += str(text_windows_count)
-            text_windows_count += 1
-        super().__init__(window_name, width, height)
+            window_name += str(log_windows_count)
+            log_windows_count += 1
+
         self.window_area = np.zeros(shape=(height, width), dtype='uint8')
-        self.text = {}
+        self.text_to_display = {}
+
+        super().__init__(window_name, width, height)
 
     def display(self):
-        result = self.window_area.copy()
+        """
+        Display all value assigned
+        to the internal dictionary.
+        :return:None
+        """
+        area_with_text = self.window_area.copy()
         character_height = 20
         row_length = self.width // 10
         line_idx = 0
-        for key, value in self.text.items():
+        for key, value in self.text_to_display.items():
             text = '{0}: {1}'.format(key, value)
+
+            # if line of the text contains
+            # new line characters
             text = text.split('\n')
-            # split text into lines so that
+
+            # split text into lines so
             # they fit for displaying
             i = 0
             while i != len(text):
                 if len(text[i]) > row_length:
-                    text = text[:i] + [text[i][0:row_length], text[i][row_length:]] + text[i + 1:]
+                    # split current line
+                    # into fitting part
+                    # and remainder
+                    fitting_part = text[i][0:row_length]
+                    remainder = text[i][row_length:]
+                    text = text[:i] + [fitting_part, remainder] + text[i+1:]
                 i += 1
-            # print each line on a new line
+
+            # print lines of text
             for line in text:
-                cv2.putText(result, line, (10, character_height * (line_idx + 1)), cv2.FONT_HERSHEY_COMPLEX,
-                            0.5, (255, 255, 255), 1, cv2.LINE_AA)
+                cv2.putText(
+                    img=area_with_text,
+                    text=line,
+                    org=(10, character_height * (line_idx + 1)),
+                    fontFace=cv2.FONT_HERSHEY_COMPLEX,
+                    fontScale=0.5,
+                    color=(255, 255, 255),
+                    thickness=1,
+                    lineType=cv2.LINE_AA
+                )
                 line_idx += 1
 
-        cv2.imshow(self.window_name, result)
-        super().display()
+        cv2.imshow(self.window_name, area_with_text)
+        WindowBase.display(self)
 
     def __getitem__(self, item):
-        return self.text[item]
+        """
+        Used to access item from
+        internal dictionary
+        :param item: key of item from dictionary
+        :return: value of item from dictionary
+        """
+        return self.text_to_display[item]
 
     def __setitem__(self, key, value):
-        self.text[key] = str(value)
+        """
+        Save item for displaying
+        :param key:
+        :param value:
+        :return: None
+        """
+        self.text_to_display[key] = str(value)
 
-    def set_from_dict(self, dict_to_display: dict):
+    def from_dict(self, dict_to_display: dict):
+        """
+        Updated values in internal
+        dictionary by values in passed
+        dictionary
+        :param dict_to_display: used to update data in internal dictionary
+        :return: None
+        """
         for key in dict_to_display:
             self[key] = dict_to_display[key]
 
