@@ -12,11 +12,20 @@ IMAGE = 1
 VIDEO = 2
 
 
-# TODO: number of channels auto-tuning
 class Component(object):
     '''
     Component is a part of image processing app.
     '''
+    def __call__(self, img):
+        """
+        Additional proxy layer between
+        application and component.
+        :param img: image to process
+        :return: processed image
+        """
+        # TODO: number of channels auto-tuning
+        return self.process(img)
+
     def process(self, img):
         '''
         Core of a component.This method must be
@@ -114,7 +123,7 @@ class App(object):
         # preform processing on image
         img = self.pre_process(img)
         for component in self.components:
-            img = component.process(img)
+            img = component(img)
         img = self.post_process(img)
 
         self.img = img
