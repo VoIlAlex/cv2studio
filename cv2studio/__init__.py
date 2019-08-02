@@ -4,7 +4,7 @@
     an image processing app into components.
 '''
 import cv2
-from .utils import *
+from .gui import *
 
 # constants for path type
 WEBCAM = 0

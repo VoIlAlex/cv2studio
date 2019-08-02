@@ -139,7 +139,7 @@ class WindowBase:
     for displaying and hiding window.
     """
 
-    def __init__(self, window_name: str, width=600, height=400):
+    def __init__(self, window_name: str, width=None, height=None):
         self.window_name = window_name
         self.displayed = False
         self.width = width
@@ -351,7 +351,8 @@ class Window(WindowBase):
         :return: None
         """
 
-        img = imutils.resize(img, width=self.width, height=self.height)
+        if self.height is not None or self.width is not None:
+            img = imutils.resize(img, width=self.width, height=self.height)
         cv2.imshow(self.window_name, img)
 
         # displaying bounded track windows
