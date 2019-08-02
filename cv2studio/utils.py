@@ -1,3 +1,8 @@
+"""
+    This module contains graphic user interface
+    utilities for the cv2studio framework.
+"""
+
 import cv2
 from numpy.random import randint as rand
 import imutils
@@ -5,42 +10,23 @@ import numpy as np
 
 # TODO: refactor the src (write documentation, remove redundancy, etc.)
 
-'''
-Summary:
-
-TrackBar
-
-    Description: Use this for creating new track bar
-
-WindowBase
-
-    Description: Base class for all the windows
-
-TrackWindow
-
-    Description: Window that contains track bars
-
-LogWindow
-
-    Description: Window for logging
-'''
-
 __all__ = [
     'TrackBar',
     'TrackWindow',
-    'Window',
     'LogWindow',
-    'default_window_for_track_bars'
+    'Window',
+    'default_track_window'
 ]
 
 # this window will contain all the track bars we create
 # type - TrackWindow
 # it is initialised when you create first track bar
 # or you can initialize it manually
-default_window_for_track_bars = None
+default_track_window = None
 
 # these guys is used when you create unnamed
 # window / track bar / text window / track bar window
+# to count already created units
 track_bars_count = 0
 track_bar_windows_count = 0
 windows_count = 0
@@ -81,8 +67,8 @@ class TrackBar:
         self.on_change = on_change
         self.parent_window = parent
         self.displayed = False
-        if default_window_for_track_bars and parent is None:
-            default_window_for_track_bars.append_track_bar(self)
+        if default_track_window and parent is None:
+            default_track_window.append_track_bar(self)
         elif parent is not None:
             parent.append_track_bar(self)
 
@@ -134,14 +120,14 @@ class WindowBase:
 
 class TrackWindow(WindowBase):
     def __init__(self, window_name: str = 'Track bars'):
-        global track_bar_windows_count, default_window_for_track_bars
+        global track_bar_windows_count, default_track_window
         if window_name == 'Track bars':
             window_name += str(track_bar_windows_count)
             track_bar_windows_count += 1
         super().__init__(window_name)
         self.tracks = []
-        if default_window_for_track_bars is None:
-            default_window_for_track_bars = self
+        if default_track_window is None:
+            default_track_window = self
 
     def display(self):
         if not self.displayed:
@@ -224,4 +210,3 @@ class Window(WindowBase):
 
     def attach_track_window(self, track_window: TrackWindow):
         self.attached_track_windows.append(track_window)
-
