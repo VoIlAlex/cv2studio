@@ -173,32 +173,52 @@ class WindowBase:
         Sets correlations between the track bar
         and the window. So that window will be able
         to display it in the future.
-        :param track:
-        :return:
+        :param track: track bar to attach
+        :return: None
         """
         self.tracks.append(track)
         track.parent_window = self
 
 
 class TrackWindow(WindowBase):
+    """
+        This kind of window is used to hold
+        track bars.
+    """
     def __init__(self, window_name: str = 'Track bars'):
         global track_bar_windows_count, default_track_window
+
+        # Generation of unique default
+        # name for the track window if necessary
         if window_name == 'Track bars':
             window_name += str(track_bar_windows_count)
             track_bar_windows_count += 1
-        super().__init__(window_name)
-        self.tracks = []
+
         if default_track_window is None:
             default_track_window = self
 
+        super().__init__(window_name)
+
     def display(self):
+        """
+        Displaying of track window and
+        all attacked track bars.
+        :return:
+        """
         if not self.displayed:
             cv2.namedWindow(self.window_name)
-        super().display()
+        WindowBase.display(self)
 
     def append_track_bar(self, track: TrackBar):
-        self.tracks.append(track)
-        track.parent_window = self
+        """
+        Sets correlations between the track bar
+        and the window. So that window will be able
+        to display it in the future.
+        :param track: track bar to attach
+        :return: None
+        """
+        WindowBase.append_track_bar(self, track)
+
         if not self.displayed:
             self.display()
         else:
