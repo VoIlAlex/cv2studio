@@ -2,7 +2,10 @@ import cv2
 import pickle
 
 
-class ComponentState(dict):
+class ComponentState:
+    def __init__(self, state: dict = None):
+        self.__state = dict() if state is None else state
+
     def load(self, path: str):
         """
         Loads a component state from a drive
@@ -10,7 +13,7 @@ class ComponentState(dict):
         :return: None
         """
         with open(path, 'br') as f:
-            self = ComponentState(pickle.load(f))
+            self.__state = pickle.load(f)
 
     def save(self, path: str):
         """
@@ -19,7 +22,7 @@ class ComponentState(dict):
         :return: None
         """
         with open(path, 'bw') as f:
-            pickle.dump(self, f)
+            pickle.dump(self.__state, f)
 
 
 class Component(object):
