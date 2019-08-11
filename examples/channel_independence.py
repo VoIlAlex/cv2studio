@@ -15,14 +15,6 @@ class VideoApp(App):
         # self.add_component(MyComponent())
         self.add_component(ToGrayConversion())
 
-    # def pre_process(self, img):
-    #     # some manipulations with the image
-    #     return img
-    #
-    # def post_process(self, img):
-    #     # some manipulations with the image
-    #     return img
-
 
 app = VideoApp('../res/forest.mp4')
 app.main_loop()
