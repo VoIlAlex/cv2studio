@@ -23,8 +23,21 @@ class Component(object):
         :param img: image to process
         :return: processed image
         """
-        # TODO: number of channels auto-tuning
-        return self.process(img)
+
+        # auto layer tuning
+        # Supported formats
+        # - BGR
+        # - GRAY
+        try:
+            result = self.process(img)
+        except Exception:
+            if len(img.shape) == 3:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            elif len(img.shape) == 2:
+                img = cv2.merge((img, img, img))
+            result = self.process(img)
+
+        return result
 
     def process(self, img):
         '''
