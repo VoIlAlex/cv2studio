@@ -3,8 +3,12 @@ import pickle
 
 
 class ComponentState:
-    def __init__(self, state: dict = None):
-        self.__state = dict() if state is None else state
+    """
+    Holds state of the component
+    used by processing method.
+    """
+    def __init__(self, state_dict=None):
+        self.__state = dict() if state_dict is None else state_dict
 
     def load(self, path: str):
         """
