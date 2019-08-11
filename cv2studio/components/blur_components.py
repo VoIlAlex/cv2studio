@@ -17,5 +17,32 @@ class GaussianBlur(Component):
         self.state['sigmaX'] = sigmaX
 
     def process(self, img):
-        result = cv2.GaussianBlur(img, self.state['ksize'], self.state['sigmaX'])
+        result = cv2.GaussianBlur(img,
+                                  self.state['ksize'],
+                                  self.state['sigmaX'])
+        return result
+
+
+class BilateralBlur(Component):
+    default_d = 9
+    default_sigmaColor = 75
+    default_sigmaSpace = 75
+
+    def __init__(self, **kwargs):
+        Component.__init__(self)
+
+        # extracting attributes
+        d = kwargs.get('d', BilateralBlur.default_d)
+        sigmaColor = kwargs.get('sigmaColor', BilateralBlur.default_sigmaColor)
+        sigmaSpace = kwargs.get('sigmaSpace', BilateralBlur.default_sigmaSpace)
+
+        self.state['d'] = d
+        self.state['sigmaColor'] = sigmaColor
+        self.state['sigmaSpace'] = sigmaSpace
+
+    def process(self, img):
+        result = cv2.bilateralFilter(img,
+                                     self.state['d'],
+                                     self.state['sigmaColor'],
+                                     self.state['sigmaSpace'])
         return result
