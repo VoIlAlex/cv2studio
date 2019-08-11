@@ -23,6 +23,15 @@ class ComponentState:
         """
         with open(path, 'bw') as f:
             pickle.dump(self.__state, f)
+            
+    def __getitem__(self, item):
+        if item in self.__state:
+            return self.__state[item]
+        else:
+            return None
+
+    def __setitem__(self, key, value):
+        self.__state[key] = value
 
 
 class Component(object):
