@@ -27,7 +27,7 @@ class ComponentState:
         """
         with open(path, 'bw') as f:
             pickle.dump(self.__state, f)
-            
+
     def __getitem__(self, item):
         if item in self.__state:
             return self.__state[item]
@@ -42,6 +42,9 @@ class Component(object):
     """
     Component is a part of image processing app.
     """
+    def __init__(self, state_dict: dict = None):
+        self.state = ComponentState(state_dict)
+
     def __call__(self, img):
         """
         Additional proxy layer between
