@@ -1,6 +1,5 @@
-from cv2studio import App, Component, VIDEO
-from cv2studio.components import *
-import cv2
+from cv2studio import App, VIDEO
+from cv2studio.components import GaussianBlur
 
 
 class VideoApp(App):

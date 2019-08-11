@@ -1,4 +1,4 @@
-from cv2studio import App, Component, VIDEO
+from cv2studio import App, VIDEO
 from cv2studio.components import BilateralBlur
 
 
