@@ -1,7 +1,7 @@
 """
     The file collects all the
     standard components available
-    for not
+    for now.
 """
 
 # Blur components
