@@ -5,6 +5,7 @@ import cv2
 
 class Blur(Component):
     def __init__(self):
+        Component.__init__(self)
         self.track_ksize = TrackBar(min_value=1, max_value=100, start_value=1, step=2)
 
     def process(self, img):
