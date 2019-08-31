@@ -4,6 +4,14 @@ import importlib
 
 
 def import_cv2studio():
+    """
+    Imports cv2stuido module.
+    I added this because my code 
+    formater doesn't allow sys.path.insert(...)
+    before import. Lol:)
+    Returns:
+        module -- cv2studio module
+    """
     root_dir = os.path.sep.join(__file__.split(os.path.sep)[:-2])
     sys.path.insert(0, root_dir)
     import cv2studio
