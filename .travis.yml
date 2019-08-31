@@ -8,3 +8,5 @@ install:
 # tests
 script:
   - pytest
+env:
+  - CODECOV_TOKEN="8628ff6f-6246-49ab-bb35-9edf85ea6a81"
