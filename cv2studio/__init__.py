@@ -10,12 +10,14 @@ from .gui import *
 WEBCAM = 0
 IMAGE = 1
 VIDEO = 2
+RESOURCE = 3
 
 
 class Component(object):
     '''
     Component is a part of image processing app.
     '''
+
     def __call__(self, img):
         """
         Additional proxy layer between
@@ -41,7 +43,7 @@ class Component(object):
 
     def process(self, img):
         '''
-        Core of a component.This method must be
+        Core of a component. This method must be
         implemented in a child-class.
         :param img: image to be precessed
         :return: processed image
@@ -51,8 +53,9 @@ class Component(object):
 
 # TODO: FPS adjustment so user can set it.
 # TODO: optional width and height for App
+# TODO: automatic resource type recognition
 class App(object):
-    def __init__(self, path: str = None, resource_type=WEBCAM, window_name='Window'):
+    def __init__(self, path: str = None, resource_type=WEBCAM, window_name='Window', resource=None):
         '''
         :param path: path to resource (image or video)
         :param resource_type: type of resource (WEBCAM, IMAGE, VIDEO)
@@ -69,6 +72,8 @@ class App(object):
             self.res = cv2.VideoCapture(path)
         elif resource_type == IMAGE:
             self.res = cv2.imread(path)
+        elif resource_type == RESOURCE:
+            self.res = resource
 
         # verify resource
         if self.res is None:
@@ -76,7 +81,8 @@ class App(object):
         if self.resource_type == VIDEO:
             _, test_frame = self.res.read()
             if test_frame is None:
-                raise AttributeError('failed to load a resource {}'.format(path))
+                raise AttributeError(
+                    'failed to load a resource {}'.format(path))
 
         # components are parts
         # image processing
@@ -173,6 +179,3 @@ class App(object):
 if __name__ == '__main__':
     app = App('/home/ilya/Documents/Code/py/cv2studio/res/slp.mp4', VIDEO)
     app.main_loop()
-
-
-
