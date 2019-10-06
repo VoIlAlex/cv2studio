@@ -6,6 +6,11 @@ components.
 
 ## Features
 
+- Component-based development
+- Channel independence 
+- Classes wrappers for HighGUI elements of OpenCV
+- Channel independence for components
+
 ## Getting Started
 
 The main principle behind this framework is decomposition.
@@ -15,6 +20,11 @@ different parts of video/image processing separately and
 share it with others.
 
 ## Installing
+
+To install the current release:
+```
+pip install cv2studio
+```
 
 ## Examples
 
@@ -69,6 +79,12 @@ more complex app see the following examples.
 
 ## Testing
 
+To run tests run the following command:
+
+```
+pytest
+```
+
 ## Versioning
 
 We use SemVer for versioning. For the versions available,
@@ -80,5 +96,5 @@ Please read CONTRIBUTE.md for details on our code of conduct, and the process fo
 
 ## License
 
-
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.txt) file for details
 
