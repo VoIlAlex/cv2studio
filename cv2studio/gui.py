@@ -60,7 +60,8 @@ class TrackBar:
 
         self.min_value = min_value
         self.max_value = max_value
-        self.start_value = start_value if start_value is not None else rand(min_value, max_value)
+        self.start_value = start_value if start_value is not None else rand(
+            min_value, max_value)
         self.step = step
         self.on_change = on_change
         self.parent_window = parent
@@ -82,7 +83,8 @@ class TrackBar:
         if self.displayed is False:
             cv2.createTrackbar(self.name, self.parent_window.window_name, self.start_value, self.max_value,
                                self.__routine)
-            cv2.setTrackbarMin(self.name, self.parent_window.window_name, self.min_value)
+            cv2.setTrackbarMin(
+                self.name, self.parent_window.window_name, self.min_value)
             self.displayed = True
 
     def get_value(self):
@@ -161,11 +163,7 @@ class WindowBase:
         :return: None
         """
         if self.displayed is True:
-            try:
-                cv2.destroyWindow(self.window_name)
-            # TODO: what kind of exception does it throw when there is no such a window
-            except Exception:
-                pass
+            cv2.destroyWindow(self.window_name)
         self.displayed = False
 
     def append_track_bar(self, track: TrackBar):
