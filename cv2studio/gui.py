@@ -204,7 +204,7 @@ class TrackWindow(WindowBase):
         all attacked track bars.
         :return:
         """
-        if not self.displayed:
+        if not self.displayed and len(self.tracks) != 0:
             cv2.namedWindow(self.window_name)
         WindowBase.display(self)
 
