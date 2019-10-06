@@ -131,24 +131,30 @@ class App(object):
         processing is performed.
         :return: None
         '''
-        # TODO: catch exception when video ended
         # getting image from resource
         img = None
         if self.resource_type == VIDEO or self.resource_type == WEBCAM:
-            _, img = self.res.read()
-        elif self.resource_type == IMAGE:
-            _, img = self.res.copy()
+            result, img = self.res.read()
 
-        # preform processing on image
+        elif self.resource_type == IMAGE:
+            img = self.res.copy()
+            result = True
+
+        # Here is where image processing go
         img = self.pre_process(img)
         for component in self.components:
             img = component(img)
         img = self.post_process(img)
 
         self.img = img
+        return result
 
     def display(self):
-        self.window.imshow(self.img)
+        if self.img is not None:
+            self.window.imshow(self.img)
+        else:
+            self.window.hide()
+            self.tracks_window.hide()
         self.tracks_window.display()
 
     def main_loop(self, **kwargs):
@@ -163,8 +169,12 @@ class App(object):
         delay = kwargs.get('delay', 10)
 
         # processing
-        while True:
-            self.update()
+        while self.update():
+
+            # The display command
+            # displays results of the
+            # processing as well as
+            # hides windows in the end
             self.display()
             key = cv2.waitKey(delay)
             if key == ord('q'):
@@ -173,6 +183,7 @@ class App(object):
         # cleaning up
         if self.resource_type == VIDEO or self.resource_type == WEBCAM:
             self.res.release()
+
         cv2.destroyAllWindows()
 
 
