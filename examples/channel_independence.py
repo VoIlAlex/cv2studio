@@ -9,19 +9,19 @@ class ToGrayConversion(Component):
         return img
 
 
+class BGRRequiredConversion(Component):
+    def process(self, img):
+        if img.shape[-1] != 3:
+            print("Assertion caught!")
+            raise AssertionError("Image should be in bgr format!")
+        return img
+
+
 class VideoApp(App):
     def __init__(self, path):
         App.__init__(self, path, VIDEO)
-        # self.add_component(MyComponent())
         self.add_component(ToGrayConversion())
-
-    # def pre_process(self, img):
-    #     # some manipulations with the image
-    #     return img
-    #
-    # def post_process(self, img):
-    #     # some manipulations with the image
-    #     return img
+        self.add_component(BGRRequiredConversion())
 
 
 app = VideoApp('../res/forest.mp4')
