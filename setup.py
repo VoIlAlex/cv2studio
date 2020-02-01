@@ -11,7 +11,7 @@ setup(
     author_email='ilya.vouk@gmail.com',
     url='https://github.com/VoIlAlex/cv2studio',
     download_url='https://github.com/VoIlAlex/cv2studio/archive/1.0.0-alpha.tar.gz',
-    keywords=['OpenCV', 'Computer Vision', 'Framework', 'Wrapper'],
+    keywords=['OpenCV', 'Computer Vision', 'Framework', 'Wrapper', 'Components'],
     install_requires=[
         'opencv-python',
         'imutils',
