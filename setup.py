@@ -1,9 +1,10 @@
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name='cv2studio',
-    packages=['cv2studio'],
-    version='1.0.0-alpha',
+    packages=find_packages('.'),
+    version='1.0.1-alpha',
     license='MIT',
     description='wrapper for cv2 library that helps to separate different parts of computer vision application',
     author='Ilya Vouk',
