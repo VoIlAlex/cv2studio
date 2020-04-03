@@ -7,7 +7,7 @@ components.
 ## Features
 
 - Component-based development
-- Channel independence 
+- Channel independence
 - Classes wrappers for HighGUI elements of OpenCV
 - Channel independence for components
 
@@ -21,20 +21,22 @@ share it with others.
 
 ## Installing
 
-To install the current release:
-```
+To install the latest release:
+
+```bash
 pip install cv2studio
 ```
 
-## Examples
+## Usage
 
-#### Importing
+### Importing
+
 Before using features of the framework
 goes importing.
 
 `from cv2studio import App, Component`
 
-#### Component creation
+### Component creation
 
 To create a component describe a class derived from `Component`.
 To use this class it's required to declare the method `process(self, img)`,
@@ -49,7 +51,7 @@ class Blur(Component):
 
 This component apply blur to an input image.
 
-#### App creation
+### App creation
 
 To create an app that will hold processing components
 describe a class derived from 'App' and add components
@@ -63,7 +65,8 @@ class VideoApp(App):
         self.add_component(Blur())
 ```
 
-#### Running
+### Running
+
 To run the described app use `main_loop` method.
 It will start main processing loop with applying
 chain of added component.
@@ -76,12 +79,11 @@ app.main_loop()
 `main_loop` starts a video processing loop. For creating
 more complex app see the following examples.
 
-
 ## Testing
 
 To run tests run the following command:
 
-```
+```bash
 pytest
 ```
 
@@ -97,4 +99,3 @@ Please read CONTRIBUTE.md for details on our code of conduct, and the process fo
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.txt) file for details
-

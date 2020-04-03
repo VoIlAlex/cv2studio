@@ -13,7 +13,7 @@ except Exception:
 setup(
     name='cv2studio',
     packages=find_packages('.'),
-    version='1.0.1',
+    version='1.0.2',
     license='MIT',
     description='Chain-based framework to split image processing into components.',
     long_description=long_description,
@@ -21,7 +21,7 @@ setup(
     author='Ilya Vouk',
     author_email='ilya.vouk@gmail.com',
     url='https://github.com/VoIlAlex/cv2studio',
-    download_url='https://github.com/VoIlAlex/cv2studio/archive/1.0.1.tar.gz',
+    download_url='https://github.com/VoIlAlex/cv2studio/archive/1.0.2.tar.gz',
     keywords=['OpenCV', 'Computer Vision',
               'Framework', 'Wrapper', 'Components'],
     install_requires=[
