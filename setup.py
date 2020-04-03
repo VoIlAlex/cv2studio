@@ -1,17 +1,29 @@
 from distutils.core import setup
 from setuptools import find_packages
+import os
+
+# User-friendly description from README.md
+current_directory = os.path.dirname(os.path.abspath(__file__))
+try:
+    with open(os.path.join(current_directory, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+except Exception:
+    long_description = ''
 
 setup(
     name='cv2studio',
     packages=find_packages('.'),
-    version='1.0.1-alpha',
+    version='1.0.1',
     license='MIT',
-    description='wrapper for cv2 library that helps to separate different parts of computer vision application',
+    description='Chain-based framework to split image processing into components.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Ilya Vouk',
     author_email='ilya.vouk@gmail.com',
     url='https://github.com/VoIlAlex/cv2studio',
-    download_url='https://github.com/VoIlAlex/cv2studio/archive/1.0.0-alpha.tar.gz',
-    keywords=['OpenCV', 'Computer Vision', 'Framework', 'Wrapper', 'Components'],
+    download_url='https://github.com/VoIlAlex/cv2studio/archive/1.0.1.tar.gz',
+    keywords=['OpenCV', 'Computer Vision',
+              'Framework', 'Wrapper', 'Components'],
     install_requires=[
         'opencv-python',
         'imutils',
@@ -22,6 +34,8 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8'
     ]
 )
