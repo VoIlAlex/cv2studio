@@ -1,5 +1,11 @@
 # cv2studio
 
+![GitHub repo size](https://img.shields.io/github/repo-size/voilalex/cv2studio)
+![PyPI - License](https://img.shields.io/pypi/l/cv2studio)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/voilalex/cv2studio)
+
+
+
 `cv2studio` is an OpenCV framework that give
 you an ability to decompose processing flow into
 components.
