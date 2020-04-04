@@ -1,5 +1,6 @@
 # cv2studio
 
+[![Downloads](https://pepy.tech/badge/cv2studio)](https://pepy.tech/project/cv2studio)
 ![GitHub repo size](https://img.shields.io/github/repo-size/voilalex/cv2studio)
 ![PyPI - License](https://img.shields.io/pypi/l/cv2studio)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/voilalex/cv2studio)
